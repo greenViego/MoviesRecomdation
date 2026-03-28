@@ -50,7 +50,9 @@ def preprocess_tmdb(tmdb):
 
 
 def train_tmdb_model(tmdb):
-    cv = CountVectorizer(max_features=5000, stop_words='english')
+    tmdb['tags'] = tmdb['tags'].fillna('')
+
+    cv = CountVectorizer(max_features=2000, stop_words='english')
     vectors = cv.fit_transform(tmdb['tags']).toarray()
 
     similarity = cosine_similarity(vectors)
