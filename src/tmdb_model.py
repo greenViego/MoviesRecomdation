@@ -50,14 +50,15 @@ def preprocess_tmdb(tmdb):
 
 
 def train_tmdb_model(tmdb):
-    tmdb['tags'] = tmdb['tags'].fillna('')
+    
+    # 🔥 FIX HERE
+    tmdb['tags'] = tmdb['tags'].fillna('').astype(str)
 
     cv = CountVectorizer(max_features=2000, stop_words='english')
     vectors = cv.fit_transform(tmdb['tags']).toarray()
 
     similarity = cosine_similarity(vectors)
     return similarity
-
 
 def recommend_tmdb(movie, tmdb, similarity):
     idx = tmdb[tmdb['title'] == movie].index[0]
