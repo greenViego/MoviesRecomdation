@@ -1,3 +1,7 @@
+import os
 import pickle
 
-pickle.dump(similarity, open('models/similarity.pkl', 'wb'))
+path = os.path.join(os.path.dirname(__file__), "..", "models", "similarity.pkl")
+
+with open(path, "rb") as f:
+    similarity = pickle.load(f)
