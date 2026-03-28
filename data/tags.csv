@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 userId,movieId,tag,timestamp
 2,60756,funny,1445714994
 2,60756,Highly quotable,1445714996
@@ -3684,6 +3685,8 @@ userId,movieId,tag,timestamp
 610,3265,heroic bloodshed,1493843978
 610,168248,Heroic Bloodshed,1493844270
 =======
+=======
+>>>>>>> 57de1a6da613f21fa4e9564ec2564e991543af35
 userId,movieId,tag,timestamp
 2,60756,funny,1445714994
 2,60756,Highly quotable,1445714996
@@ -7368,4 +7371,7 @@ userId,movieId,tag,timestamp
 610,3265,gun fu,1493843984
 610,3265,heroic bloodshed,1493843978
 610,168248,Heroic Bloodshed,1493844270
+<<<<<<< HEAD
 >>>>>>> 290880b (Fixed Altair compatibility issue)
+=======
+>>>>>>> 57de1a6da613f21fa4e9564ec2564e991543af35

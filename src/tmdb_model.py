@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import pandas as pd
 import ast
 from sklearn.feature_extraction.text import CountVectorizer
@@ -67,6 +68,8 @@ def recommend_tmdb(movie, tmdb, similarity):
                          key=lambda x: x[1])[1:6]
 
 =======
+=======
+>>>>>>> 57de1a6da613f21fa4e9564ec2564e991543af35
 import pandas as pd
 import ast
 from sklearn.feature_extraction.text import CountVectorizer
@@ -134,5 +137,8 @@ def recommend_tmdb(movie, tmdb, similarity):
                          reverse=True,
                          key=lambda x: x[1])[1:6]
 
+<<<<<<< HEAD
 >>>>>>> 290880b (Fixed Altair compatibility issue)
+=======
+>>>>>>> 57de1a6da613f21fa4e9564ec2564e991543af35
     return [tmdb.iloc[i[0]].title for i in movies_list]

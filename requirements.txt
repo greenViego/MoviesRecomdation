@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 pandas
 numpy
 scikit-learn
@@ -11,3 +12,11 @@ pandas
 numpy
 scikit-learn
 pickle-mixin
+=======
+streamlit==1.19.0
+altair==4.2.2
+scikit-learn
+pandas
+numpy
+requests
+>>>>>>> 57de1a6da613f21fa4e9564ec2564e991543af35

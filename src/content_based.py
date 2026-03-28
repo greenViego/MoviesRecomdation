@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pickle
@@ -20,6 +21,8 @@ def recommend(movie, movies, similarity):
     scores = sorted(scores, key=lambda x: x[1], reverse=True)
 
 =======
+=======
+>>>>>>> 57de1a6da613f21fa4e9564ec2564e991543af35
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pickle
@@ -40,5 +43,8 @@ def recommend(movie, movies, similarity):
     scores = list(enumerate(similarity[idx]))
     scores = sorted(scores, key=lambda x: x[1], reverse=True)
 
+<<<<<<< HEAD
 >>>>>>> 290880b (Fixed Altair compatibility issue)
+=======
+>>>>>>> 57de1a6da613f21fa4e9564ec2564e991543af35
     return [movies.iloc[i[0]].title for i in scores[1:6]]
