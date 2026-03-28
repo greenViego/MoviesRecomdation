@@ -1,15 +1,27 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pickle
 
 def train_content_model(movies):
-    tfidf = TfidfVectorizer(stop_words='english')
+    
+    # 🔥 LIMIT DATA (IMPORTANT)
+    movies = movies.head(2000)
+
+    # Clean data
     movies['genres'] = movies['genres'].fillna('')
     
-    tfidf_matrix = tfidf.fit_transform(movies['genres'])
-    similarity = cosine_similarity(tfidf_matrix)
+    # 🔥 REDUCE FEATURES
+    cv = CountVectorizer(max_features=1500, stop_words='english')
+    
+    vectors = cv.fit_transform(movies['genres']).toarray()
+    
+    similarity = cosine_similarity(vectors)
 
+    import pickle
     pickle.dump(similarity, open('models/similarity.pkl', 'wb'))
+
+    print("✅ similarity.pkl saved successfully!")
+
     return similarity
 
 
