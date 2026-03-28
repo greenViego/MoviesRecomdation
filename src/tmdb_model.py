@@ -50,10 +50,9 @@ def preprocess_tmdb(tmdb):
     tmdb['overview'] = tmdb['overview'].fillna('')
 
     # Convert lists → strings safely
-    tmdb['genres'] = tmdb['genres'].apply(lambda x: " ".join(x))
-    tmdb['keywords'] = tmdb['keywords'].apply(lambda x: " ".join(x))
-    tmdb['cast'] = tmdb['cast'].apply(lambda x: " ".join(x))
-
+    tmdb['genres'] = tmdb['genres'].apply(lambda x: " ".join(x) if isinstance(x, list) else "")
+    tmdb['keywords'] = tmdb['keywords'].apply(lambda x: " ".join(x) if isinstance(x, list) else "")
+    tmdb['cast'] = tmdb['cast'].apply(lambda x: " ".join(x) if isinstance(x, list) else "")
     # Final tags (NO NaN possible now)
     tmdb['tags'] = (
         tmdb['overview'] + " " +
