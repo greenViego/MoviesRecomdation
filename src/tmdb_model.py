@@ -12,6 +12,8 @@ def load_tmdb():
 
 def convert(text):
     L = []
+    if pd.isna(text):
+        return L
     for i in ast.literal_eval(text):
         L.append(i['name'])
     return L
@@ -19,39 +21,53 @@ def convert(text):
 
 def get_cast(text):
     L = []
+    if pd.isna(text):
+        return L
     for i in ast.literal_eval(text)[:3]:
         L.append(i['name'])
     return L
 
 
 def get_director(text):
+    if pd.isna(text):
+        return ""
     for i in ast.literal_eval(text):
         if i['job'] == 'Director':
             return i['name']
+    return ""
 
 
 def preprocess_tmdb(tmdb):
-    tmdb = tmdb[['title', 'overview', 'genres', 'keywords', 'cast', 'crew']]
+    tmdb = tmdb[['title', 'overview', 'genres', 'keywords', 'cast', 'crew']].copy()
 
+    # Apply safely
     tmdb['genres'] = tmdb['genres'].apply(convert)
     tmdb['keywords'] = tmdb['keywords'].apply(convert)
     tmdb['cast'] = tmdb['cast'].apply(get_cast)
     tmdb['crew'] = tmdb['crew'].apply(get_director)
 
+    # Fill NaNs BEFORE combining
     tmdb['overview'] = tmdb['overview'].fillna('')
 
-    tmdb['tags'] = tmdb['overview'] + " " + \
-                   tmdb['genres'].apply(lambda x: " ".join(x)) + " " + \
-                   tmdb['keywords'].apply(lambda x: " ".join(x)) + " " + \
-                   tmdb['cast'].apply(lambda x: " ".join(x)) + " " + \
-                   tmdb['crew']
+    # Convert lists → strings safely
+    tmdb['genres'] = tmdb['genres'].apply(lambda x: " ".join(x))
+    tmdb['keywords'] = tmdb['keywords'].apply(lambda x: " ".join(x))
+    tmdb['cast'] = tmdb['cast'].apply(lambda x: " ".join(x))
+
+    # Final tags (NO NaN possible now)
+    tmdb['tags'] = (
+        tmdb['overview'] + " " +
+        tmdb['genres'] + " " +
+        tmdb['keywords'] + " " +
+        tmdb['cast'] + " " +
+        tmdb['crew']
+    )
 
     return tmdb
 
 
 def train_tmdb_model(tmdb):
-    
-    # 🔥 FIX HERE
+    # Final safety (just in case)
     tmdb['tags'] = tmdb['tags'].fillna('').astype(str)
 
     cv = CountVectorizer(max_features=2000, stop_words='english')
@@ -60,12 +76,15 @@ def train_tmdb_model(tmdb):
     similarity = cosine_similarity(vectors)
     return similarity
 
+
 def recommend_tmdb(movie, tmdb, similarity):
     idx = tmdb[tmdb['title'] == movie].index[0]
     distances = similarity[idx]
 
-    movies_list = sorted(list(enumerate(distances)),
-                         reverse=True,
-                         key=lambda x: x[1])[1:6]
+    movies_list = sorted(
+        list(enumerate(distances)),
+        reverse=True,
+        key=lambda x: x[1]
+    )[1:6]
 
     return [tmdb.iloc[i[0]].title for i in movies_list]
