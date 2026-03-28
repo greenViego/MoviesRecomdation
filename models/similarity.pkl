@@ -1,7 +1,0 @@
-import os
-import pickle
-
-path = os.path.join(os.path.dirname(__file__), "..", "models", "similarity.pkl")
-
-with open(path, "rb") as f:
-    similarity = pickle.load(f)
