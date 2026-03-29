@@ -18,7 +18,7 @@ st.title("🎬 Movie Recommendation System")
 from src.tmdb_model import load_tmdb, preprocess_tmdb, train_tmdb_model, recommend_tmdb
 tmdb = load_tmdb()
 tmdb = preprocess_tmdb(tmdb)
-similarity = train_tmdb_model(tmdb)
+similarity, tmdb = train_tmdb_model(tmdb)
 
 movie_list = movies['title'].values
 selected_movie = st.selectbox("Choose a movie", movie_list)

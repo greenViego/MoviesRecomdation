@@ -4,13 +4,13 @@ import pickle
 
 def train_content_model(movies):
     
-    # 🔥 LIMIT DATA (IMPORTANT)
+    
     movies = movies.head(2000)
 
     # Clean data
     movies['genres'] = movies['genres'].fillna('')
     
-    # 🔥 REDUCE FEATURES
+    
     cv = CountVectorizer(max_features=1500, stop_words='english')
     
     vectors = cv.fit_transform(movies['genres']).toarray()
