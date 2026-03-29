@@ -77,7 +77,16 @@ def train_tmdb_model(tmdb):
 
 
 def recommend_tmdb(movie, tmdb, similarity):
-    idx = tmdb[tmdb['title'] == movie].index[0]
+    movie = movie.strip().lower()
+
+    tmdb['title_clean'] = tmdb['title'].str.strip().str.lower()
+
+    matches = tmdb[tmdb['title_clean'] == movie]
+
+    if matches.empty:
+        return ["Movie not found in dataset 😅"]
+
+    idx = matches.index[0]
     distances = similarity[idx]
 
     movies_list = sorted(
