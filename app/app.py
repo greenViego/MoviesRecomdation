@@ -10,7 +10,7 @@ import streamlit as st
 from src.tmdb_model import (
     load_tmdb,
     preprocess_tmdb,
-    train_tmdb_model,
+    train_tmdb_model_v2,
     recommend_tmdb
 )
 
@@ -22,7 +22,7 @@ tmdb = load_tmdb()
 tmdb = preprocess_tmdb(tmdb)
 
 # Train model (creates similarity matrix)
-similarity, tmdb = train_tmdb_model(tmdb)
+similarity, tmdb = train_tmdb_model_v2(tmdb)
 
 # Movie selection dropdown
 movie_list = tmdb['title'].values

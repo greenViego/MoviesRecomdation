@@ -67,9 +67,8 @@ def preprocess_tmdb(tmdb):
     return tmdb
 
 
-def train_tmdb_model(tmdb):
+def train_tmdb_model_v2(tmdb):
     tmdb = tmdb.head(2000)
-
     tmdb['tags'] = tmdb['tags'].fillna('').astype(str)
 
     cv = CountVectorizer(max_features=2000, stop_words='english')
@@ -77,7 +76,7 @@ def train_tmdb_model(tmdb):
 
     similarity = cosine_similarity(vectors)
 
-    return similarity, tmdb   # 🔥 return both
+    return similarity, tmdb
 
 
 def recommend_tmdb(movie, tmdb, similarity):
