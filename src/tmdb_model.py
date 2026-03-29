@@ -40,6 +40,8 @@ def get_director(text):
 def preprocess_tmdb(tmdb):
     tmdb = tmdb[['title', 'overview', 'genres', 'keywords', 'cast', 'crew']].copy()
 
+    tmdb['title_clean'] = tmdb['title'].str.strip().str.lower()
+
     # Apply safely
     tmdb['genres'] = tmdb['genres'].apply(convert)
     tmdb['keywords'] = tmdb['keywords'].apply(convert)
@@ -79,14 +81,16 @@ def train_tmdb_model(tmdb):
 def recommend_tmdb(movie, tmdb, similarity):
     movie = movie.strip().lower()
 
-    tmdb['title_clean'] = tmdb['title'].str.strip().str.lower()
-
     matches = tmdb[tmdb['title_clean'] == movie]
 
     if matches.empty:
         return ["Movie not found in dataset 😅"]
 
     idx = matches.index[0]
+
+    if idx >= len(similarity):
+        return ["Model mismatch error 😅"]
+
     distances = similarity[idx]
 
     movies_list = sorted(
